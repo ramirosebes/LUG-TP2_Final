@@ -7,9 +7,13 @@ const cartSchema = new Schema(
         detail: [{
             productName: {
                 type: String,
+                ref: "ProductDetail"
+                
             },
             subTotal: {
-                type: Number
+                type: Number,
+                ref: "ProductDetail"
+                
             }
         }],
         total: {
