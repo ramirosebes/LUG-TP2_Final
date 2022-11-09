@@ -15,10 +15,10 @@ const productSchema = new Schema(
             type: Number,
             require: true
         },
-        provider: {
+        /*provider: {
             type: Schema.Types.ObjectId,
             ref: "Provider"
-        }
+        }*/
     }
 )
 

@@ -3,26 +3,23 @@ import { model, Schema, SchemaType, SchemaTypes, Types, Document } from "mongoos
 
 const productDetailSchema = new Schema(
     {
-        product: {
-            type: Schema.Types.ObjectId,
-            ref: "Product"
+        productName: {
+            type: String
         },
         quantity: {
             type: Number,
-            require: true
+            default: 0,
         },
         price: {
             type: Number,
-            require: true
         },
         subTotal: {
             type: Number,
-            require: true
         }
     },
-    {
+    /*{
         timestamps: true
-    }
+    }*/
 )
 
-export default model("Product_Detail", productDetailSchema)
+export default model("ProductDetail", productDetailSchema)

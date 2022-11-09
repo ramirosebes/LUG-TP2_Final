@@ -1,21 +1,25 @@
 import { model, Schema, Types, Document } from "mongoose";
-import productDetail from "./product_detail";
+import productDetail from "./productDetail";
 
 
 const cartSchema = new Schema(
     {
-       productDetails: [{
-            type: Schema.Types.ObjectId,
-            ref: "Product_Detail"
-       }],
-       total: {
+        detail: [{
+            productName: {
+                type: String,
+            },
+            subTotal: {
+                type: Number
+            }
+        }],
+        total: {
             type: Number,
             default: 0
-       }
+        }
     },
-    {
+    /*{
         timestamps: true
-    }
+    }*/
 )
 
-export default model("Model" , cartSchema)
+export default model("Cart" , cartSchema)
