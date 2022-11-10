@@ -1,7 +1,11 @@
 import { model, Schema, SchemaTypes, Types, Document } from "mongoose";
 
-
-const productSchema = new Schema(
+interface IProduct {
+    name: string
+    price: number
+    stock: number
+}
+const productSchema = new Schema<IProduct>(
     {
         name: {
             type: String,
@@ -14,12 +18,8 @@ const productSchema = new Schema(
         stock: {
             type: Number,
             require: true
-        },
-        /*provider: {
-            type: Schema.Types.ObjectId,
-            ref: "Provider"
-        }*/
+        }
     }
 )
 
-export default model("Product", productSchema);
+export default model<IProduct>("Product", productSchema);

@@ -20,60 +20,33 @@ export const cartController = {
     },
     addProduct:async (req: Request, res: Response) => {
         try {
-
-            //Queries
-            //Busco si existe el Producto con el nombre colocado en PostMan
             const myProduct = await productModel.findOne({name: req.body.name})
-            const myProductDetail = await productDetailModel.findOne({productName: req.body.name})
             const myCart = await cartModel.find()
+            const myProductDetailIdx = myCart[0].detail.findIndex((pd) => pd.productName === req.body.name)
+            if (!myProduct) {
+                res.status(404).send('El producto seleccionado no existe.')
 
-            //Variables Globales
-
-
-            //Checkeo que el producto exista
-            if (myProduct == null) { //Comparo con null
-                //Si no existe...
-                res.send('El producto seleccionado no existe.') //Si no existe = nulo
-
-            } else{ //Si existe...
-                //Checkeo si ya existe un Product Detail con el nombre del producto ingresado
-                if (myProductDetail == null) {
-                //Si no existe dicho Product Detail
-                //Creo el nuevo ProductDetail
+            } else{
+                if (myProductDetailIdx === -1) {
                 const newPD = new productDetailModel({
                     productName: myProduct.name,
                     quantity: 1,
                     price: myProduct.price,
-                    subTotal: myProduct.price
+                    subTotal: myProduct.price * 1
                 })
-                newPD.save()
-                //Cart
-
-                res.send(newPD)
-
-                } else if (myProductDetail != null){ //Si el ProductDetail no es nulo
-                    //Product Detail//
-
-                    //Vriables
-                    const newQuantity: any = myProductDetail.quantity + 1
-                    const newPrice: any = myProductDetail.price
-                    const newSubtotal: any = newQuantity * newPrice
-
-                    myProductDetail.quantity = newQuantity
-                    myProductDetail.subTotal = newSubtotal
-                    //await productDetailModel.findOneAndUpdate({productName: myProduct.name}, {quantity: newQuantity, subTotal: newSubtotal})
-                    myProductDetail.save()
-
-                    //Cart
-                    myCart[0].detail.push(myProductDetail)
-
-
-                    res.send(myCart)
+                await newPD.save()
+                myCart[0].detail.push(newPD)
+                await myCart[0].save()
+                } else {
+                    const myDetail = myCart[0].detail[myProductDetailIdx]
+                    if (myDetail) {
+                        myDetail.quantity += 1
+                        myDetail.subTotal = myDetail.price * myDetail.quantity
+                        await myCart[0].save()
+                    }
                 }
-                //meter validacion si el carrito existe o no (if myCart == null...)   
             }
-            
-        //res.send(product)
+            await res.send(myCart)
         } catch (error) {
             res.status(500).send(error)
         }

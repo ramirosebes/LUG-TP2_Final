@@ -1,7 +1,8 @@
 import { model, Schema, SchemaType, SchemaTypes, Types, Document } from "mongoose";
+import { IDetail } from "./cart";
 
 
-const productDetailSchema = new Schema(
+const productDetailSchema = new Schema<IDetail>(
     {
         productName: {
             type: String
@@ -17,9 +18,6 @@ const productDetailSchema = new Schema(
             type: Number,
         }
     },
-    /*{
-        timestamps: true
-    }*/
 )
 
-export default model("ProductDetail", productDetailSchema)
+export default model<IDetail>("ProductDetail", productDetailSchema)

@@ -1,19 +1,31 @@
 import { model, Schema, Types, Document } from "mongoose";
 import productDetail from "./productDetail";
 
+export interface IDetail extends Document {
+    productName: string
+    quantity: number
+    price: number
+    subTotal: number
+}
 
-const cartSchema = new Schema(
+interface ICart extends Document {
+    detail: IDetail[]
+    total: number
+}
+const cartSchema = new Schema<ICart>(
     {
         detail: [{
             productName: {
-                type: String,
-                ref: "ProductDetail"
-                
+                type: String,                        
+            },
+            quantity: {
+                type: Number,
+            },
+            price: {
+                type: Number,
             },
             subTotal: {
-                type: Number,
-                ref: "ProductDetail"
-                
+                type: Number,                
             }
         }],
         total: {
@@ -21,9 +33,6 @@ const cartSchema = new Schema(
             default: 0
         }
     },
-    /*{
-        timestamps: true
-    }*/
 )
 
-export default model("Cart" , cartSchema)
+export default model<ICart>("Cart" , cartSchema)
