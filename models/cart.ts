@@ -1,18 +1,18 @@
 import { model, Schema, Types, Document } from "mongoose";
 import productDetail from "./productDetail";
 
-export interface IDetail extends Document {
+export interface IDetail extends Document { //Modelo dentro del codigo
     productName: string
     quantity: number
     price: number
     subTotal: number
 }
 
-interface ICart extends Document {
+interface ICart extends Document { //Modelo dentro del codigo
     detail: IDetail[]
     total: number
 }
-const cartSchema = new Schema<ICart>(
+const cartSchema = new Schema<ICart>( //Aca establezco el modelo para Mongoose
     {
         detail: [{
             productName: {
