@@ -82,7 +82,7 @@ export const cartController = {
             return
         } else {
             if (myProductDetailIdx === -1) {
-                res.status(404).send(`El producto ${req.body.name} no esta en el carrito`)
+                res.status(404).send(`El detalle del producto ${req.body.name} no esta en el carrito`)
                 return
             } else {
                 const myDetail = myCart[0].detail[myProductDetailIdx]
@@ -101,11 +101,4 @@ export const cartController = {
         }
         await res.send(myCart)
     },
-    pruebasCart: async (req: Request, res: Response) => {
-        try {
-
-        } catch (error) {
-            res.status(500).send(error)
-        }
-    }
 }

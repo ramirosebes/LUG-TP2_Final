@@ -1,11 +1,14 @@
-import { model, Schema, Document } from "mongoose";
+import { model, Schema, Document, SchemaType, SchemaTypes, Types } from "mongoose";
 
+interface IProvider extends Document { //Modelo dentro del codigo
+    name: string
+    adress: string
+}
 
-const providerSchema = new Schema(
+const providerSchema = new Schema<IProvider>(
     {
         name: {
             type: String,
-            require: true
         },
         adress: {
             type: String
@@ -13,4 +16,4 @@ const providerSchema = new Schema(
     }
 )
 
-export default model("Provider", providerSchema)
+export default model<IProvider>("Provider", providerSchema)

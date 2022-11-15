@@ -3,7 +3,7 @@ import productModel from "../models/product";
 import productDetailModel from "../models/productDetail";
 
 const productController = {
-    getProducts:async (req: Request, res: Response) => {
+    getProduct:async (req: Request, res: Response) => {
         try
         {
             const allProducts = await productModel.find()

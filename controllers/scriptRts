@@ -101,11 +101,4 @@ export const cartController = {
         }
         await res.send(myCart)
     },
-    pruebasCart: async (req: Request, res: Response) => {
-        try {
-
-        } catch (error) {
-            res.status(500).send(error)
-        }
-    }
 }
